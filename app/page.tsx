@@ -1,85 +1,109 @@
-import Link from "next/link";
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, Code, FileCode, Globe } from 'lucide-react';
+import Link from "next/link"
+import { ArrowRight, Code2, Globe, Zap } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white">
-      <div className="container mx-auto px-4 py-20">
-        <div className="flex flex-col items-center text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400">
-              Livesite
-            </span>
-          </h1>
-          <p className="text-xl md:text-2xl text-slate-300 mb-10 max-w-2xl">
-            Create, preview, and host your HTML, CSS, and JavaScript snippets with a unique URL in seconds
-          </p>
-          <div className="flex gap-4 mb-16">
-            <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700">
-              <Link href="/create">
-                Create a Snippet <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
+    <div className="flex min-h-screen flex-col">
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur flex justify-center">
+        <div className="container flex h-16 items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Globe className="h-6 w-6 text-purple-500" />
+            <span className="text-xl font-bold">LiveSite</span>
+          </div>
+          <nav className="flex items-center gap-4">
+            <Link href="/login" className="text-sm font-medium hover:underline">
+              Login
+            </Link>
+            <Button asChild>
+              <Link href="/signup">Get Started</Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="text-white border-white hover:text-slate-800">
-              <Link href="/dashboard">
-                My Snippets <FileCode className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
+          </nav>
+        </div>
+      </header>
+
+      <main className="flex-1 flex flex-col items-center justify-center text-center">
+        <section className="container py-24 md:py-32">
+          <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
+            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+              Deploy your <span className="text-purple-500">static sites</span> in seconds
+            </h1>
+            <p className="mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl">
+              LiveSite helps you deploy HTML, CSS, and JavaScript single-page websites instantly with custom domains.
+            </p>
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+              <Button asChild size="lg" className="bg-purple-600 hover:bg-purple-700">
+                <Link href="/signup">
+                  Get Started <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="lg">
+                <Link href="/login">Login to Dashboard</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        <section className="container py-16 md:py-24">
+          <div className="grid gap-8 md:grid-cols-3">
+            <div className="flex flex-col items-center rounded-lg border p-6 text-center shadow-sm">
+              <div className="rounded-full bg-purple-100 p-3">
+                <Zap className="h-6 w-6 text-purple-600" />
+              </div>
+              <h3 className="mt-4 text-xl font-bold">Instant Deployment</h3>
+              <p className="mt-2 text-muted-foreground">Deploy your site in seconds with our streamlined workflow.</p>
+            </div>
+            <div className="flex flex-col items-center rounded-lg border p-6 text-center shadow-sm">
+              <div className="rounded-full bg-green-100 p-3">
+                <Globe className="h-6 w-6 text-green-600" />
+              </div>
+              <h3 className="mt-4 text-xl font-bold">Custom Slug</h3>
+              <p className="mt-2 text-muted-foreground">Use your own slug for your LiveSite.</p>
+            </div>
+            <div className="flex flex-col items-center rounded-lg border p-6 text-center shadow-sm">
+              <div className="rounded-full bg-amber-100 p-3">
+                <Code2 className="h-6 w-6 text-amber-600" />
+              </div>
+              <h3 className="mt-4 text-xl font-bold">Code Editor</h3>
+              <p className="mt-2 text-muted-foreground">Built-in code editor for HTML, CSS, and JavaScript.</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-slate-50 py-16 px-16 my-5 md:py-24 rounded-2xl">
+          <div className="container">
+            <div className="mx-auto max-w-3xl text-center">
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Ready to bring your ideas to life?</h2>
+              <p className="mt-4 text-lg text-muted-foreground">
+                Join thousands of developers who trust LiveSite for their static site hosting needs.
+              </p>
+              <Button asChild size="lg" className="mt-8 bg-purple-600 hover:bg-purple-700">
+                <Link href="/signup">Create Your First Site</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer className="border-t py-8 flex justify-center">
+        <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
+          <div className="flex items-center gap-2">
+            <Globe className="h-5 w-5 text-purple-500" />
+            <span className="font-semibold">LiveSite</span>
+          </div>
+          <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} LiveSite. All rights reserved.</p>
+          <div className="flex gap-4">
+            <Link href="#" className="text-sm text-muted-foreground hover:underline">
+              Terms
+            </Link>
+            <Link href="#" className="text-sm text-muted-foreground hover:underline">
+              Privacy
+            </Link>
+            <Link href="#" className="text-sm text-muted-foreground hover:underline">
+              Contact
+            </Link>
           </div>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
-          <Card className="bg-slate-800 border-slate-700 shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Code className="h-5 w-5 text-blue-400" /> Code Editor
-              </CardTitle>
-              <CardDescription className="text-slate-300">
-                Write HTML, CSS, and JavaScript in our feature-rich editor
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-slate-400">
-                Our editors support syntax highlighting, auto-completion, and live error checking to make coding a breeze.
-              </p>
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-slate-800 border-slate-700 shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Globe className="h-5 w-5 text-emerald-400" /> Live Preview
-              </CardTitle>
-              <CardDescription className="text-slate-300">
-                See your changes in real-time with our live preview feature
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-slate-400">
-                Instantly visualize your code output without leaving the editor, making it easy to iterate quickly.
-              </p>
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-slate-800 border-slate-700 shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <FileCode className="h-5 w-5 text-purple-400" /> Hosted Sites
-              </CardTitle>
-              <CardDescription className="text-slate-300">
-                Get a unique URL for each of your snippets
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-slate-400">
-                Share your creations with the world using permanent, shareable links for all your published snippets.
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
+      </footer>
     </div>
-  );
+  )
 }
