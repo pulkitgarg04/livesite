@@ -16,7 +16,7 @@ interface CodeEditorProps {
   height?: string
 }
 
-export function CodeEditor({ value, onChange, language, height = "300px" }: CodeEditorProps) {
+export function CodeEditor({ value, onChange, language, height = "500px" }: CodeEditorProps) {
   const [element, setElement] = useState<HTMLElement | null>(null)
   const [editor, setEditor] = useState<EditorView | null>(null)
 
@@ -77,5 +77,5 @@ export function CodeEditor({ value, onChange, language, height = "300px" }: Code
     }
   }, [value, editor])
 
-  return <div ref={setElement} className="overflow-hidden rounded border" style={{ height }} />
+  return <div ref={setElement} className="overflow-hidden rounded border bg-black" style={{ height }} />
 }

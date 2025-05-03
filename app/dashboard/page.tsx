@@ -1,14 +1,19 @@
-import Link from "next/link"
-import { Plus } from "lucide-react"
-import { currentUser } from "@clerk/nextjs/server"
+import Link from "next/link";
+import { Plus } from "lucide-react";
+import { currentUser } from "@clerk/nextjs/server";
 
-import { Button } from "@/components/ui/button"
-import { getSitesByUserId } from "@/lib/mongodb"
-import { SiteCard } from "@/components/site-card"
+import { Button } from "@/components/ui/button";
+import { getSitesByUserId } from "@/lib/mongodb";
+import { SiteCard } from "@/components/site-card";
+import { SiteCardSkeleton } from "@/components/site-card-skeleton";
 
 export default async function DashboardPage() {
-  const user = await currentUser()
-  const sites = await getSitesByUserId(user?.id || "")
+  const user = await currentUser();
+  const sitesPromise = getSitesByUserId(user?.id || "");
+
+  const isLoading = !sitesPromise;
+
+  const sites = await sitesPromise;
 
   return (
     <div className="container py-10">
@@ -22,10 +27,18 @@ export default async function DashboardPage() {
         </Button>
       </div>
 
-      {sites.length === 0 ? (
+      {isLoading ? (
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <SiteCardSkeleton key={i} />
+          ))}
+        </div>
+      ) : sites.length === 0 ? (
         <div className="flex min-h-[400px] flex-col items-center justify-center rounded-lg border border-dashed p-8 text-center">
           <h2 className="text-2xl font-semibold">No sites yet</h2>
-          <p className="mt-2 text-muted-foreground">Create your first site to get started.</p>
+          <p className="mt-2 text-muted-foreground">
+            Create your first site to get started.
+          </p>
           <Button asChild className="mt-6 bg-purple-600 hover:bg-purple-700">
             <Link href="/dashboard/create">
               <Plus className="mr-2 h-4 w-4" />
@@ -41,5 +54,5 @@ export default async function DashboardPage() {
         </div>
       )}
     </div>
-  )
+  );
 }

@@ -12,11 +12,11 @@ export default function Home() {
             <span className="text-xl font-bold">LiveSite</span>
           </div>
           <nav className="flex items-center gap-4">
-            <Link href="/login" className="text-sm font-medium hover:underline">
+            <Link href="/dashboard" className="text-sm font-medium hover:underline">
               Login
             </Link>
             <Button asChild>
-              <Link href="/signup">Get Started</Link>
+              <Link href="/dashboard">Get Started</Link>
             </Button>
           </nav>
         </div>
@@ -33,12 +33,12 @@ export default function Home() {
             </p>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
               <Button asChild size="lg" className="bg-purple-600 hover:bg-purple-700">
-                <Link href="/signup">
+                <Link href="/dashboard">
                   Get Started <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg">
-                <Link href="/login">Login to Dashboard</Link>
+                <Link href="/dashboard">Login to Dashboard</Link>
               </Button>
             </div>
           </div>
@@ -78,7 +78,7 @@ export default function Home() {
                 Join thousands of developers who trust LiveSite for their static site hosting needs.
               </p>
               <Button asChild size="lg" className="mt-8 bg-purple-600 hover:bg-purple-700">
-                <Link href="/signup">Create Your First Site</Link>
+                <Link href="/dashboard">Create Your First Site</Link>
               </Button>
             </div>
           </div>
