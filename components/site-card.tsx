@@ -49,7 +49,7 @@ export function SiteCard({ site }: SiteCardProps) {
         <CardTitle className="flex items-center justify-between">
           {site.title}
           <Button variant="ghost" size="icon" asChild className="h-8 w-8 text-muted-foreground">
-            <Link href={`https://yourlivesite.vercel.app/${site.slug}`} target="_blank">
+            <Link href={`https://yourlivesite.vercel.app/s/${site.slug}`} target="_blank">
               <ExternalLink className="h-4 w-4" />
               <span className="sr-only">Visit site</span>
             </Link>
@@ -58,7 +58,7 @@ export function SiteCard({ site }: SiteCardProps) {
         <CardDescription>{site.description || "No description"}</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="rounded-md bg-slate-100 px-3 py-1 text-sm font-mono">https://yourlivesite.vercel.app/{site.slug}</div>
+        <div className="rounded-md bg-slate-100 px-3 py-1 text-sm font-mono">https://yourlivesite.vercel.app/s/{site.slug}</div>
       </CardContent>
       <CardFooter className="flex justify-between">
         <Button asChild variant="outline" size="sm">

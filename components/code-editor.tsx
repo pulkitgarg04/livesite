@@ -21,27 +21,27 @@ export function CodeEditor({ value, onChange, language, height = "500px" }: Code
   const [editor, setEditor] = useState<EditorView | null>(null)
 
   useEffect(() => {
-    if (!element) return
-
+    if (!element) return;
+  
     if (editor) {
-      editor.destroy()
+      editor.destroy();
     }
-
-    let langExtension
+  
+    let langExtension;
     switch (language) {
       case "html":
-        langExtension = html()
-        break
+        langExtension = html();
+        break;
       case "css":
-        langExtension = css()
-        break
+        langExtension = css();
+        break;
       case "javascript":
-        langExtension = javascript()
-        break
+        langExtension = javascript();
+        break;
       default:
-        langExtension = javascript()
+        langExtension = javascript();
     }
-
+  
     const view = new EditorView({
       doc: value,
       extensions: [
@@ -51,19 +51,19 @@ export function CodeEditor({ value, onChange, language, height = "500px" }: Code
         vscodeDark,
         EditorView.updateListener.of((update) => {
           if (update.docChanged) {
-            onChange(update.state.doc.toString())
+            onChange(update.state.doc.toString());
           }
         }),
       ],
       parent: element,
-    })
-
-    setEditor(view)
-
+    });
+  
+    setEditor(view);
+  
     return () => {
-      view.destroy()
-    }
-  }, [element, language])
+      view.destroy();
+    };
+  }, [element, language, editor, onChange, value]);  
 
   useEffect(() => {
     if (editor && value !== editor.state.doc.toString()) {
