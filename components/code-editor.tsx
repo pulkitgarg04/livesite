@@ -1,48 +1,36 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { basicSetup } from "codemirror"
-import { EditorView, keymap } from "@codemirror/view"
-import { indentWithTab } from "@codemirror/commands"
-import { javascript } from "@codemirror/lang-javascript"
-import { html } from "@codemirror/lang-html"
-import { css } from "@codemirror/lang-css"
-import { vscodeDark } from "@uiw/codemirror-theme-vscode"
+import { useEffect, useRef } from "react";
+import { basicSetup } from "codemirror";
+import { EditorView, keymap } from "@codemirror/view";
+import { indentWithTab } from "@codemirror/commands";
+import { javascript } from "@codemirror/lang-javascript";
+import { html } from "@codemirror/lang-html";
+import { css } from "@codemirror/lang-css";
+import { vscodeDark } from "@uiw/codemirror-theme-vscode";
 
 interface CodeEditorProps {
-  value: string
-  onChange: (value: string) => void
-  language: "html" | "css" | "javascript"
-  height?: string
+  value: string;
+  onChange: (value: string) => void;
+  language: "html" | "css" | "javascript";
+  height?: string;
 }
 
 export function CodeEditor({ value, onChange, language, height = "500px" }: CodeEditorProps) {
-  const [element, setElement] = useState<HTMLElement | null>(null)
-  const [editor, setEditor] = useState<EditorView | null>(null)
+  const editorRef = useRef<HTMLDivElement | null>(null);
+  const editorInstanceRef = useRef<EditorView | null>(null);
 
   useEffect(() => {
-    if (!element) return;
-  
-    if (editor) {
-      editor.destroy();
-    }
-  
-    let langExtension;
-    switch (language) {
-      case "html":
-        langExtension = html();
-        break;
-      case "css":
-        langExtension = css();
-        break;
-      case "javascript":
-        langExtension = javascript();
-        break;
-      default:
-        langExtension = javascript();
-    }
-  
-    const view = new EditorView({
+    if (!editorRef.current) return;
+
+    const langExtension =
+      language === "html"
+        ? html()
+        : language === "css"
+        ? css()
+        : javascript();
+
+    const editor = new EditorView({
       doc: value,
       extensions: [
         basicSetup,
@@ -55,17 +43,19 @@ export function CodeEditor({ value, onChange, language, height = "500px" }: Code
           }
         }),
       ],
-      parent: element,
+      parent: editorRef.current,
     });
-  
-    setEditor(view);
-  
+
+    editorInstanceRef.current = editor;
+
     return () => {
-      view.destroy();
+      editor.destroy();
+      editorInstanceRef.current = null;
     };
-  }, [element, language, editor, onChange, value]);  
+  }, [language, onChange]);
 
   useEffect(() => {
+    const editor = editorInstanceRef.current;
     if (editor && value !== editor.state.doc.toString()) {
       editor.dispatch({
         changes: {
@@ -73,9 +63,9 @@ export function CodeEditor({ value, onChange, language, height = "500px" }: Code
           to: editor.state.doc.length,
           insert: value,
         },
-      })
+      });
     }
-  }, [value, editor])
+  }, [value]);
 
-  return <div ref={setElement} className="overflow-hidden rounded border bg-black" style={{ height }} />
+  return <div ref={editorRef} className="overflow-hidden rounded border bg-black" style={{ height }} />;
 }
