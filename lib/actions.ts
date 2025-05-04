@@ -42,17 +42,27 @@ export async function createSite(data: SiteData) {
 }
 
 export async function updateSite(id: string, data: Partial<SiteData>) {
-  await connectToDatabase();
+  try {
+    const updatedData = {
+      ...data,
+      updatedAt: new Date(),
+    };
+    if (!updatedData.title || !updatedData.slug || !updatedData.html) {
+      throw new Error("Missing required fields: title, slug, or html");
+    }
 
-  const result = await Site.findByIdAndUpdate(
-    id,
-    { ...data, updatedAt: new Date() },
-    { new: true }
-  );
+    await connectToDatabase();
 
-  revalidatePath("/dashboard");
-  revalidatePath(`/dashboard/edit/${id}`);
-  return result;
+    const result = await Site.findByIdAndUpdate(id, updatedData, { new: true });
+    if (!result) {
+      throw new Error("Failed to find site to update");
+    }
+
+    return;
+  } catch (error) {
+    console.error("Error updating site:", error);
+    throw new Error("Failed to update site");
+  }
 }
 
 export async function deleteSite(id: string) {

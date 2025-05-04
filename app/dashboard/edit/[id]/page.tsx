@@ -130,14 +130,17 @@ export default function EditSitePage({ params }: { params: Promise<{ id: string 
 
         try {
             if (id) {
-                await updateSite(id, {
+                const updatedData = {
                     title,
                     slug,
                     description,
                     html,
                     css,
                     js
-                });
+                };
+
+                console.log("Updated data:", updatedData);
+                await updateSite(id, updatedData);
 
                 toast.success("Site updated successfully");
                 router.push("/dashboard");
