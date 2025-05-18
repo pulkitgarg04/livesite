@@ -1,11 +1,18 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { useState } from "react"
-import { Edit, ExternalLink, Trash } from "lucide-react"
+import Link from "next/link";
+import { useState } from "react";
+import { Edit, ExternalLink, Trash } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,49 +23,62 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import { deleteSite } from "@/lib/actions"
+} from "@/components/ui/alert-dialog";
+import { deleteSite } from "@/lib/actions";
 
 interface SiteCardProps {
   site: {
-    _id: string
-    slug: string
-    title: string
-    description: string
-    createdAt: Date
-  }
+    _id: string;
+    slug: string;
+    title: string;
+    description: string;
+    createdAt: Date;
+  };
 }
 
 export function SiteCard({ site }: SiteCardProps) {
-  const [isDeleting, setIsDeleting] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDelete = async () => {
-    setIsDeleting(true)
+    setIsDeleting(true);
     try {
-      await deleteSite(site._id.toString())
+      await deleteSite(site._id.toString());
     } catch (error) {
-      console.error("Failed to delete site:", error)
+      console.error("Failed to delete site:", error);
     } finally {
-      setIsDeleting(false)
+      setIsDeleting(false);
     }
-  }
+  };
 
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           {site.title}
-          <Button variant="ghost" size="icon" asChild className="h-8 w-8 text-muted-foreground">
-            <Link href={`https://yourlivesite.vercel.app/s/${site.slug}`} target="_blank">
-              <ExternalLink className="h-4 w-4" />
+          <Button
+            variant="ghost"
+            size="icon"
+            asChild
+            className="h-8 w-8 text-muted-foreground truncate overflow-hidden flex items-center justify-center"
+          >
+            <Link
+              href={`https://yourlivesite.vercel.app/s/${site.slug}`}
+              target="_blank"
+              className="truncate flex items-center"
+            >
+              <ExternalLink className="h-4 w-4 flex-shrink-0" />
               <span className="sr-only">Visit site</span>
             </Link>
           </Button>
         </CardTitle>
-        <CardDescription>{site.description || "No description"}</CardDescription>
+        <CardDescription>
+          {site.description || "No description"}
+        </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="rounded-md bg-slate-100 px-3 py-1 text-sm font-mono">https://yourlivesite.vercel.app/s/{site.slug}</div>
+        <div className="rounded-md bg-slate-100 px-3 py-1 text-sm font-mono truncate">
+          https://yourlivesite.vercel.app/s/{site.slug}
+        </div>
       </CardContent>
       <CardFooter className="flex justify-between">
         <Button asChild variant="outline" size="sm">
@@ -78,17 +98,19 @@ export function SiteCard({ site }: SiteCardProps) {
             <AlertDialogHeader>
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete your site and remove the data from our
-                servers.
+                This action cannot be undone. This will permanently delete your
+                site and remove the data from our servers.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
+              <AlertDialogAction onClick={handleDelete}>
+                Delete
+              </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
       </CardFooter>
     </Card>
-  )
+  );
 }

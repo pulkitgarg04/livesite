@@ -2,28 +2,28 @@
 
 import { revalidatePath } from "next/cache";
 import mongoose from "mongoose";
-import { Site } from "./mongodb"
+import { Site } from "./mongodb";
 
 if (!process.env.MONGODB_URI) {
-    throw new Error("Please add your MongoDB URI to .env.local");
-  }
-  const uri = process.env.MONGODB_URI;
-  const connectToDatabase = async () => {
+  throw new Error("Please add your MongoDB URI to .env.local");
+}
+const uri = process.env.MONGODB_URI;
+const connectToDatabase = async () => {
   if (mongoose.connection.readyState === 0) {
     await mongoose.connect(uri);
   }
 };
 
 interface SiteData {
-    userId: string;
-    title: string;
-    slug: string;
-    description?: string;
-    html?: string;
-    css?: string;
-    js?: string;
-    createdAt?: Date;
-    updatedAt?: Date;
+  userId: string;
+  title: string;
+  slug: string;
+  description?: string;
+  html?: string;
+  css?: string;
+  js?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export async function createSite(data: SiteData) {
@@ -35,10 +35,8 @@ export async function createSite(data: SiteData) {
     updatedAt: new Date(),
   });
 
-  const result = await site.save();
-
+  await site.save();
   revalidatePath("/dashboard");
-  return result;
 }
 
 export async function updateSite(id: string, data: Partial<SiteData>) {
