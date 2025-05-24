@@ -25,9 +25,13 @@ jobs:
 
       - name: Install Dependencies
         run: npm ci
-        
-      - name: Add Mock Environment Variables
-        run: echo "MONGODB_URI=mongodb://localhost:27017/testdb" >> .env.local
+
+      - name: Add Environment Variables
+        run: |
+          echo "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}" >> .env.local
+          echo "CLERK_SECRET_KEY=${{ secrets.CLERK_SECRET_KEY }}" >> .env.local
+          echo "NODE_ENV=${{ secrets.NODE_ENV }}" >> .env.local
+          echo "MONGODB_URI=mongodb://localhost:27017/testdb" >> .env.local
 
       - name: Run Linter
         run: npm run lint
