@@ -6,8 +6,9 @@ import {
   LayoutDashboard,
   Globe,
   Plus,
-  BarChart3,
+  CircleDollarSign,
   ChevronsLeftRight,
+  Info,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { UserButton, useUser } from "@clerk/nextjs";
@@ -17,7 +18,8 @@ const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "Sites", href: "/dashboard/sites", icon: Globe },
   { name: "Create Site", href: "/dashboard/create", icon: Plus },
-  { name: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
+  { name: "Billing", href: "#", icon: CircleDollarSign },
+  { name: "Help", href: "#", icon: Info },
 ];
 
 export function DashboardSidebar() {

@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Plus, BarChart3, Settings, Globe, Users, Zap, Shield } from "lucide-react"
+import { Plus, Globe, TrendingUp } from "lucide-react"
 import { currentUser } from "@clerk/nextjs/server"
 
 import { Button } from "@/components/ui/button"
@@ -47,56 +47,24 @@ export default async function DashboardPage() {
 
             <StatsCards stats={stats} />
 
-            <Card className="bg-gray-900 border-gray-800">
-              <CardHeader>
-                <CardTitle className="text-white">Quick Actions</CardTitle>
-                <CardDescription className="text-gray-400">Common tasks to help you get started</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <Button
-                    variant="outline"
-                    className="h-auto p-4 bg-gray-800 border-gray-700 hover:bg-gray-700"
-                    asChild
-                  >
-                    <Link href="/dashboard/create" className="flex flex-col items-center gap-2">
-                      <Plus className="h-6 w-6 text-[#cff245]" />
-                      <span className="font-medium">Create Site</span>
-                      <span className="text-xs text-gray-400">Deploy a new project</span>
-                    </Link>
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="h-auto p-4 bg-gray-800 border-gray-700 hover:bg-gray-700"
-                    asChild
-                  >
-                    <Link href="/dashboard/analytics" className="flex flex-col items-center gap-2">
-                      <BarChart3 className="h-6 w-6 text-[#cff245]" />
-                      <span className="font-medium">View Analytics</span>
-                      <span className="text-xs text-gray-400">Track performance</span>
-                    </Link>
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="h-auto p-4 bg-gray-800 border-gray-700 hover:bg-gray-700"
-                    asChild
-                  >
-                    <Link href="/dashboard/settings" className="flex flex-col items-center gap-2">
-                      <Settings className="h-6 w-6 text-[#cff245]" />
-                      <span className="font-medium">Settings</span>
-                      <span className="text-xs text-gray-400">Manage account</span>
-                    </Link>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-semibold">Your Sites</h2>
-                <div className="flex items-center gap-2 text-sm text-gray-400">
-                  <Globe className="h-4 w-4" />
-                  {stats.totalSites} {stats.totalSites === 1 ? "site" : "sites"}
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2 text-sm text-gray-400">
+                    <Globe className="h-4 w-4" />
+                    {stats.totalSites} {stats.totalSites === 1 ? "site" : "sites"}
+                  </div>
+                  {sites.length > 0 && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      asChild
+                      className="border-gray-700 bg-gray-600 text-gray-300 hover:text-gray-300 hover:bg-gray-700"
+                    >
+                      <Link href="/dashboard/sites">View All</Link>
+                    </Button>
+                  )}
                 </div>
               </div>
 
@@ -125,55 +93,62 @@ export default async function DashboardPage() {
                   </CardContent>
                 </Card>
               ) : (
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {sites.map((site) => (
-                    <SiteCard key={site._id.toString()} site={site} />
-                  ))}
-                </div>
+                <>
+                  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    {sites.slice(0, 6).map((site) => (
+                      <SiteCard key={site._id.toString()} site={site} />
+                    ))}
+                  </div>
+                  {sites.length > 6 && (
+                    <div className="text-center">
+                      <Button variant="outline" asChild className="border-gray-700 text-gray-300 hover:bg-gray-800">
+                        <Link href="/dashboard/sites">View All {sites.length} Sites</Link>
+                      </Button>
+                    </div>
+                  )}
+                </>
               )}
             </div>
 
-            <Card className="bg-gray-900 border-gray-800">
-              <CardHeader>
-                <CardTitle className="text-white">Platform Features</CardTitle>
-                <CardDescription className="text-gray-400">
-                  Everything you need to deploy and manage your sites
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="flex items-start gap-3">
-                    <div className="rounded-lg bg-[#cff245]/10 p-2">
-                      <Zap className="h-5 w-5 text-[#cff245]" />
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-white">Instant Deploy</h4>
-                      <p className="text-sm text-gray-400">
-                        Deploy your sites in seconds with our optimized infrastructure
-                      </p>
-                    </div>
+            {sites.length > 0 && (
+              <Card className="bg-gray-900 border-gray-800">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center gap-2">
+                    <TrendingUp className="h-5 w-5 text-[#cff245]" />
+                    Recent Activity
+                  </CardTitle>
+                  <CardDescription className="text-gray-400">Latest updates from your sites</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {sites.slice(0, 3).map((site) => (
+                      <div
+                        key={site._id.toString()}
+                        className="flex items-center justify-between p-3 bg-gray-800 rounded-lg"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-gradient-to-br from-[#cff245] to-[#b8e03a] rounded-lg flex items-center justify-center">
+                            <Globe className="h-5 w-5 text-black" />
+                          </div>
+                          <div>
+                            <p className="font-medium text-white">{site.title}</p>
+                            <p className="text-sm text-gray-400">
+                              {site.views || 0} views • Updated{" "}
+                              {new Date(site.updatedAt || site.createdAt).toLocaleDateString()}
+                            </p>
+                          </div>
+                        </div>
+                        <Button variant="ghost" size="sm" asChild className="text-[#cff245] hover:bg-[#cff245]/10">
+                          <Link href={`/s/${site.slug}`} target="_blank">
+                            Visit
+                          </Link>
+                        </Button>
+                      </div>
+                    ))}
                   </div>
-                  <div className="flex items-start gap-3">
-                    <div className="rounded-lg bg-[#cff245]/10 p-2">
-                      <Shield className="h-5 w-5 text-[#cff245]" />
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-white">SSL Security</h4>
-                      <p className="text-sm text-gray-400">Automatic SSL certificates for all your deployments</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="rounded-lg bg-[#cff245]/10 p-2">
-                      <Users className="h-5 w-5 text-[#cff245]" />
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-white">Team Access</h4>
-                      <p className="text-sm text-gray-400">Collaborate with your team on projects</p>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            )}
           </div>
         </main>
       </div>

@@ -51,9 +51,9 @@ export function SiteCard({ site }: SiteCardProps) {
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center justify-between">
+    <Card className="bg-gray-900 border-gray-800">
+      <CardHeader className="space-y-1">
+        <CardTitle className="flex items-center justify-between text-white">
           {site.title}
           <Button
             variant="ghost"
@@ -64,19 +64,19 @@ export function SiteCard({ site }: SiteCardProps) {
             <Link
               href={`https://yourlivesite.vercel.app/s/${site.slug}`}
               target="_blank"
-              className="truncate flex items-center"
+              className="truncate flex items-center bg-transparent hover:bg-gray-800 rounded-md p-1 text-gray-400 hover:text-white transition-colors"
             >
               <ExternalLink className="h-4 w-4 flex-shrink-0" />
               <span className="sr-only">Visit site</span>
             </Link>
           </Button>
         </CardTitle>
-        <CardDescription>
+        <CardDescription className="text-gray-400">
           {site.description || "No description"}
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <div className="rounded-md bg-slate-100 px-3 py-1 text-sm font-mono truncate">
+      <CardContent className="space-y-2">
+        <div className="rounded-md bg-slate-100 px-3 py-1 text-sm font-mono truncate text-gray-800 dark:bg-slate-800 dark:text-gray-200">
           https://yourlivesite.vercel.app/s/{site.slug}
         </div>
       </CardContent>

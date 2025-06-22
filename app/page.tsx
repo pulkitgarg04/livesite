@@ -95,8 +95,8 @@ export default function Home() {
                 Get Started
               </Link>
               <Image
-                src="/hero-black.png"
-                width={320}
+                src="/create-site.png"
+                width={520}
                 height={200}
                 className="absolute bottom-0 right-0 max-w-[80%]"
                 alt="LiveSite dashboard"
