@@ -1,109 +1,291 @@
-import Link from "next/link"
-import { ArrowRight, Code2, Globe, Zap } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import Link from "next/link";
+import Image from "next/image";
+import { ChevronsLeftRight, CheckCircle2 } from "lucide-react";
+import Testimonials from "@/components/home/Testimonials";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur flex justify-center">
-        <div className="container flex h-16 items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Globe className="h-6 w-6 text-purple-500" />
+    <div className="flex min-h-screen flex-col bg-[#0d0e11]">
+      <header className="px-8 py-4 bg-[#0d0e11] border-b border-gray-800">
+        <div className="flex items-center text-white justify-between mx-auto w-full max-w-7xl">
+          <Link href="/" className="flex items-center gap-2">
+            <ChevronsLeftRight className="text-[#cff245] h-6 w-6" />
             <span className="text-xl font-bold">LiveSite</span>
-          </div>
-          <nav className="flex items-center gap-4">
-            <Link href="/dashboard" className="text-sm font-medium hover:underline">
-              Login
+          </Link>
+          <nav className="hidden md:flex text-sm gap-8">
+            <Link href="/" className="underline">
+              Home
             </Link>
-            <Button asChild>
-              <Link href="/dashboard">Get Started</Link>
-            </Button>
+            <Link href="#features" className="hover:underline">
+              Features
+            </Link>
+            <Link href="#pricing" className="hover:underline">
+              Pricing
+            </Link>
+            <Link href="mailto:business.pulkitgarg@gmail.com" className="hover:underline">
+              Contact
+            </Link>
           </nav>
+          <Link href="/dashboard" className="text-sm py-1 px-4 border rounded-xl">
+            Login
+          </Link>
         </div>
       </header>
 
-      <main className="flex-1 flex flex-col items-center justify-center text-center">
-        <section className="container py-24 md:py-32">
-          <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-              Deploy your <span className="text-purple-500">static sites</span> in seconds
-            </h1>
-            <p className="mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl">
-              LiveSite helps you deploy HTML, CSS, and JavaScript single-page websites instantly with custom domains.
-            </p>
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-              <Button asChild size="lg" className="bg-purple-600 hover:bg-purple-700">
-                <Link href="/dashboard">
-                  Get Started <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg">
-                <Link href="/dashboard">Login to Dashboard</Link>
-              </Button>
-            </div>
+      <main className="px-8 py-20 relative items-center overflow-hidden max-h-[900px]">
+        <div className="flex flex-col gap-6 items-center text-white mx-auto w-full max-w-5xl">
+          <h1 className="text-5xl md:text-7xl font-semibold tracking-tighter text-center">
+            Deploy your <span className="text-[#cff245]">static sites</span>
+            <br /> in seconds
+          </h1>
+          <p className="font-normal text-lg text-center">
+            LiveSite helps you deploy{" "}
+            <span className="text-[#cff245]">HTML, CSS, and JavaScript</span>{" "}
+            single-page websites instantly
+          </p>
+          <div className="mt-12 w-full max-w-[800px]">
+            <Image
+              src="/hero-image.png"
+              width={800}
+              height={400}
+              className="mx-auto rounded-xl shadow-2xl"
+              alt="LiveSite deployment preview"
+            />
           </div>
-        </section>
-
-        <section className="container py-16 md:py-24">
-          <div className="grid gap-8 md:grid-cols-3">
-            <div className="flex flex-col items-center rounded-lg border p-6 text-center shadow-sm">
-              <div className="rounded-full bg-purple-100 p-3">
-                <Zap className="h-6 w-6 text-purple-600" />
-              </div>
-              <h3 className="mt-4 text-xl font-bold">Instant Deployment</h3>
-              <p className="mt-2 text-muted-foreground">Deploy your site in seconds with our streamlined workflow.</p>
-            </div>
-            <div className="flex flex-col items-center rounded-lg border p-6 text-center shadow-sm">
-              <div className="rounded-full bg-green-100 p-3">
-                <Globe className="h-6 w-6 text-green-600" />
-              </div>
-              <h3 className="mt-4 text-xl font-bold">Custom Slug</h3>
-              <p className="mt-2 text-muted-foreground">Use your own slug for your LiveSite.</p>
-            </div>
-            <div className="flex flex-col items-center rounded-lg border p-6 text-center shadow-sm">
-              <div className="rounded-full bg-amber-100 p-3">
-                <Code2 className="h-6 w-6 text-amber-600" />
-              </div>
-              <h3 className="mt-4 text-xl font-bold">Code Editor</h3>
-              <p className="mt-2 text-muted-foreground">Built-in code editor for HTML, CSS, and JavaScript.</p>
-            </div>
-          </div>
-        </section>
-
-        <section className="bg-slate-50 py-16 px-16 my-5 md:py-24 rounded-2xl">
-          <div className="container">
-            <div className="mx-auto max-w-3xl text-center">
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Ready to bring your ideas to life?</h2>
-              <p className="mt-4 text-lg text-muted-foreground">
-                Join thousands of developers who trust LiveSite for their static site hosting needs.
-              </p>
-              <Button asChild size="lg" className="mt-8 bg-purple-600 hover:bg-purple-700">
-                <Link href="/dashboard">Create Your First Site</Link>
-              </Button>
-            </div>
-          </div>
-        </section>
+        </div>
       </main>
-      <footer className="border-t py-8 flex justify-center">
-        <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
-          <div className="flex items-center gap-2">
-            <Globe className="h-5 w-5 text-purple-500" />
-            <span className="font-semibold">LiveSite</span>
+
+      <section id="features" className="px-8 py-20 bg-[#f6f7fa] rounded-t-3xl">
+        <div className="flex flex-col gap-16 items-center mx-auto w-full max-w-5xl">
+          <h2 className="text-4xl font-semibold tracking-tighter text-center text-gray-900">
+            With LiveSite, you can:
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="flex flex-col gap-4 bg-white rounded-3xl p-8">
+              <Image
+                src="/access-anywhere.png"
+                width={500}
+                height={300}
+                className="mx-auto mb-6"
+                alt="LiveSite mobile interface"
+              />
+              <h3 className="text-xl font-bold text-gray-900">Access from Anywhere</h3>
+              <p className="text-sm text-gray-600">
+                You can access your site from anywhere, anytime on the internet.
+              </p>
+              <Link
+                href="/dashboard"
+                className="bg-[#cff245] px-4 py-2 text-black rounded-xl w-fit"
+              >
+                Get Started
+              </Link>
+            </div>
+            <div className="flex flex-col gap-4 bg-white rounded-3xl p-8 relative overflow-hidden min-h-[400px]">
+              <h3 className="text-xl font-bold text-gray-900">
+                Instant Deployment
+              </h3>
+              <p className="text-sm text-gray-600">
+                Deploy your site instantly with just a few clicks. No more
+                waiting for servers or complicated setups.
+              </p>
+              <Link
+                href="/dashboard"
+                className="bg-[#cff245] px-4 py-2 text-black rounded-xl w-fit"
+              >
+                Get Started
+              </Link>
+              <Image
+                src="/hero-black.png"
+                width={320}
+                height={200}
+                className="absolute bottom-0 right-0 max-w-[80%]"
+                alt="LiveSite dashboard"
+              />
+            </div>
           </div>
-          <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} LiveSite. All rights reserved.</p>
-          <div className="flex gap-4">
-            <Link href="#" className="text-sm text-muted-foreground hover:underline">
-              Terms
-            </Link>
-            <Link href="#" className="text-sm text-muted-foreground hover:underline">
-              Privacy
-            </Link>
-            <Link href="#" className="text-sm text-muted-foreground hover:underline">
-              Contact
-            </Link>
+        </div>
+      </section>
+
+      <section className="px-8 py-20">
+        <div className="flex flex-col gap-12 items-center mx-auto w-full max-w-3xl">
+          <h2 className="text-4xl font-semibold tracking-tighter text-center text-white">
+            More Tools to Enhance Your Workflow
+          </h2>
+          <div className="flex flex-wrap justify-center gap-4 w-full">
+            {[
+              "Instant Deploy",
+              "Custom Domains",
+              "Analytics",
+              "SSL Certificates",
+              "CDN Support",
+              "Team Access",
+              "API Access",
+              "24/7 Support",
+            ].map((tool) => (
+              <div
+                key={tool}
+                className="flex w-[100px] flex-col gap-2 p-6 rounded-xl border border-gray-200 items-center bg-white"
+              >
+                <CheckCircle2 className="h-8 w-8 text-[#cff245]" />
+                <span className="text-center text-sm font-bold">{tool}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <Testimonials />
+
+      <section id="pricing" className="px-8 py-20">
+        <div className="mx-auto max-w-5xl">
+          <h2 className="text-4xl font-semibold tracking-tighter text-white text-center">
+            Level up your deployment experience
+          </h2>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-12">
+            {[
+              {
+                title: "LiveSite - Basic",
+                price: "$0",
+                features: [
+                  "Instant site deployment",
+                  "Custom slug support",
+                  "3 team members",
+                  "Community access",
+                ],
+              },
+              {
+                title: "LiveSite - Pro",
+                price: "$10 /year",
+                features: [
+                  "Save 33% - 4 months free",
+                  "All Monthly features",
+                  "Advanced analytics",
+                  "10 team members",
+                  "Priority support",
+                  "API access",
+                ],
+                highlight: true,
+              },
+              {
+                title: "LiveSite - Perpetual",
+                price: "$50 /one-time",
+                features: [
+                  "Pay once, use forever",
+                  "All Yearly features",
+                  "Unlimited team members",
+                  "Premium support",
+                  "Lifetime updates",
+                ],
+              },
+            ].map((plan) => (
+              <div
+                key={plan.title}
+                className={`flex flex-col justify-between h-full p-8 rounded-3xl ${
+                  plan.highlight
+                    ? "bg-[#cff245] text-black"
+                    : "bg-gray-50 text-gray-900"
+                }`}
+              >
+                <div className="flex flex-col">
+                  <h3 className="mt-4 font-medium">{plan.title}</h3>
+                  <div className="text-2xl font-medium">{plan.price}</div>
+                  <p className="mt-2 text-xs italic text-gray-600">
+                    Excluding local taxes or GST if applicable
+                  </p>
+                  <ul className="flex flex-col gap-2 mt-8 text-sm">
+                    {plan.features.map((feature) => (
+                      <li key={feature} className="flex items-start gap-3">
+                        <CheckCircle2 className="h-5 w-5 flex-shrink-0" />
+                        <p>{feature}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <Link
+                  href="/dashboard"
+                  className="mt-8 flex items-center justify-center w-full h-10 px-4 py-2 text-sm font-semibold bg-white border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-100"
+                >
+                  Get Started
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-[#f6f7fa] rounded-3xl">
+        <div className="h-full max-w-5xl mx-auto">
+          <div className="flex flex-col gap-12">
+            <div>
+              <h2 className="font-semibold tracking-tighter text-5xl text-center">
+                FAQ
+              </h2>
+              <p className="mx-auto mt-4 text-sm text-gray-600 text-center">
+                Frequent questions &amp; answers
+              </p>
+            </div>
+            <div className="flex flex-col mx-auto max-w-2xl gap-6 text-base text-gray-400 w-full px-4">
+              <details>
+                <summary className="cursor-pointer text-base font-medium tracking-tight text-gray-900">
+                  What is LiveSite?
+                </summary>
+                <p className="pt-4 text-sm text-gray-500">
+                  LiveSite is a platform that allows you to deploy static HTML,
+                  CSS, and JavaScript websites instantly with custom domains and
+                  security features.
+                </p>
+              </details>
+              <details>
+                <summary className="cursor-pointer text-base font-medium tracking-tight text-gray-900">
+                  What coding languages does LiveSite support?
+                </summary>
+                <p className="pt-4 text-sm text-gray-500">
+                  LiveSite supports HTML, CSS, and JavaScript for building
+                  static websites.
+                </p>
+              </details>
+              <details>
+                <summary className="cursor-pointer text-base font-medium tracking-tight text-gray-900">
+                  How fast can I deploy my website?
+                </summary>
+                <p className="pt-4 text-sm text-gray-500">
+                  With LiveSite, you can deploy your website in seconds using
+                  our intuitive tools.
+                </p>
+              </details>
+              <details>
+                <summary className="cursor-pointer text-base font-medium tracking-tight text-gray-900">
+                  How can I track my website&apos;s deployment progress?
+                </summary>
+                <p className="pt-4 text-sm text-gray-500">
+                  With LiveSite, you can easily monitor your website&apos;s
+                  deployment status through our dashboard, which provides
+                  real-time updates and notifications.
+                </p>
+              </details>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer className="px-8 py-20 flex flex-col gap-12">
+        <div className="mx-auto max-w-5xl">
+          <div className="text-white">
+            <div className="inline-flex items-center gap-3">
+              <p className="text-2xl font-bold uppercase">LiveSite</p>
+            </div>
+            <p className="mt-2 text-sm text-gray-400">
+              LiveSite makes static site deployment effortless with instant
+              setup, custom domains, and top-tier security.
+            </p>
+          </div>
+          <div className="flex flex-col pt-12 md:flex-row md:items-center md:justify-between">
+            <p className="text-left text-xs text-gray-500">
+              © {new Date().getFullYear()} LiveSite. All rights reserved
+            </p>
           </div>
         </div>
       </footer>
     </div>
-  )
+  );
 }

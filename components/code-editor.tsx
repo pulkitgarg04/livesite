@@ -1,34 +1,29 @@
-"use client";
+"use client"
 
-import { useEffect, useRef } from "react";
-import { basicSetup } from "codemirror";
-import { EditorView, keymap } from "@codemirror/view";
-import { indentWithTab } from "@codemirror/commands";
-import { javascript } from "@codemirror/lang-javascript";
-import { html } from "@codemirror/lang-html";
-import { css } from "@codemirror/lang-css";
-import { vscodeDark } from "@uiw/codemirror-theme-vscode";
+import { useEffect, useRef } from "react"
+import { basicSetup } from "codemirror"
+import { EditorView, keymap } from "@codemirror/view"
+import { indentWithTab } from "@codemirror/commands"
+import { javascript } from "@codemirror/lang-javascript"
+import { html } from "@codemirror/lang-html"
+import { css } from "@codemirror/lang-css"
+import { vscodeDark } from "@uiw/codemirror-theme-vscode"
 
 interface CodeEditorProps {
-  value: string;
-  onChange: (value: string) => void;
-  language: "html" | "css" | "javascript";
-  height?: string;
+  value: string
+  onChange: (value: string) => void
+  language: "html" | "css" | "javascript"
+  height?: string
 }
 
 export function CodeEditor({ value, onChange, language, height = "500px" }: CodeEditorProps) {
-  const editorRef = useRef<HTMLDivElement | null>(null);
-  const editorInstanceRef = useRef<EditorView | null>(null);
+  const editorRef = useRef<HTMLDivElement | null>(null)
+  const editorInstanceRef = useRef<EditorView | null>(null)
 
   useEffect(() => {
-    if (!editorRef.current) return;
+    if (!editorRef.current) return
 
-    const langExtension =
-      language === "html"
-        ? html()
-        : language === "css"
-        ? css()
-        : javascript();
+    const langExtension = language === "html" ? html() : language === "css" ? css() : javascript()
 
     const editor = new EditorView({
       doc: value,
@@ -39,23 +34,31 @@ export function CodeEditor({ value, onChange, language, height = "500px" }: Code
         vscodeDark,
         EditorView.updateListener.of((update) => {
           if (update.docChanged) {
-            onChange(update.state.doc.toString());
+            onChange(update.state.doc.toString())
           }
+        }),
+        EditorView.theme({
+          "&": {
+            height: height,
+          },
+          ".cm-scroller": {
+            fontFamily: "JetBrains Mono, Consolas, Monaco, 'Courier New', monospace",
+          },
         }),
       ],
       parent: editorRef.current,
-    });
+    })
 
-    editorInstanceRef.current = editor;
+    editorInstanceRef.current = editor
 
     return () => {
-      editor.destroy();
-      editorInstanceRef.current = null;
-    };
-  }, [language, onChange]);
+      editor.destroy()
+      editorInstanceRef.current = null
+    }
+  }, [language, onChange, height])
 
   useEffect(() => {
-    const editor = editorInstanceRef.current;
+    const editor = editorInstanceRef.current
     if (editor && value !== editor.state.doc.toString()) {
       editor.dispatch({
         changes: {
@@ -63,9 +66,9 @@ export function CodeEditor({ value, onChange, language, height = "500px" }: Code
           to: editor.state.doc.length,
           insert: value,
         },
-      });
+      })
     }
-  }, [value]);
+  }, [value])
 
-  return <div ref={editorRef} className="overflow-hidden rounded border bg-black" style={{ height }} />;
+  return <div ref={editorRef} className="overflow-hidden rounded border-black bg-black w-full" style={{ height }} />
 }
